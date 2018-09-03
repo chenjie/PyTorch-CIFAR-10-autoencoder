@@ -32,7 +32,7 @@ def print_model(encoder, decoder):
     print(encoder)
     print("============== Decoder ==============")
     print(decoder)
-    print()
+    print("")
 
 
 def create_model():
@@ -50,7 +50,6 @@ def get_torch_vars(x):
     return Variable(x)
 
 def imshow(img):
-    img = img / 2 + 0.5
     npimg = img.numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
@@ -120,10 +119,10 @@ def main():
         exit(0)
 
     # Define an optimizer and criterion
-    criterion = nn.MSELoss()
+    criterion = nn.BCELoss()
     optimizer = optim.Adadelta(autoencoder.parameters())
 
-    for epoch in range(5):
+    for epoch in range(100):
         running_loss = 0.0
         for i, (inputs, _) in enumerate(trainloader, 0):
             inputs = get_torch_vars(inputs)
