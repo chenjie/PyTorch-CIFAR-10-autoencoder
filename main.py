@@ -120,7 +120,7 @@ def main():
 
     # Define an optimizer and criterion
     criterion = nn.BCELoss()
-    optimizer = optim.Adadelta(autoencoder.parameters())
+    optimizer = optim.Adadelta(autoencoder.parameters(), lr=0.1)
 
     for epoch in range(100):
         running_loss = 0.0
