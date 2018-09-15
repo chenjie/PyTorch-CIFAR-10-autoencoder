@@ -5,7 +5,7 @@ This is a reimplementation of the blog post "Building Autoencoders in Keras". In
 First attempt:  
 ![decode](/weights/decoded_img.png)
 
-Second try:  
+**Current:**  
 ![decode](/weights/decoded_img2.png)
 
 Targets:  
