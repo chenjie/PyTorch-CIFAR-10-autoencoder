@@ -61,19 +61,19 @@ class Autoencoder(nn.Module):
         # Input size: [batch, 3, 32, 32]
         # Output size: [batch, 3, 32, 32]
         self.encoder = nn.Sequential(
-            nn.Conv2d(3, 32, 4, stride=4, padding=0),            # [batch, 6, 32, 32]
-            # nn.MaxPool2d(4),                                    # [batch, 6, 16, 16]
+            nn.Conv2d(3, 32, 4, stride=4, padding=0),            # [batch, 32, 8, 8]
+            # nn.MaxPool2d(4),                                    
             nn.ReLU(),
-            nn.Conv2d(32, 48, 3, stride=3, padding=2),           # [batch, 12, 16, 16]
-            # nn.MaxPool2d(2),                                    # [batch, 12, 8, 8]
+            nn.Conv2d(32, 48, 3, stride=3, padding=2),           # [batch, 48, 4, 4]
+            # nn.MaxPool2d(2),                                    
             nn.ReLU(),
         )
         self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(48, 32, 3, stride=3, padding=2),  # [batch, 6, 8, 8]
-            # nn.Upsample(scale_factor=2),                        # [batch, 6, 16, 16]
+            nn.ConvTranspose2d(48, 32, 3, stride=3, padding=2),  # [batch, 32, 8, 8]
+            # nn.Upsample(scale_factor=2),                        
             nn.ReLU(),
-            nn.ConvTranspose2d(32, 3, 4, stride=4, padding=0),   # [batch, 3, 16, 16]
-            # nn.Upsample(scale_factor=4),                        # [batch, 3, 32, 32]
+            nn.ConvTranspose2d(32, 3, 4, stride=4, padding=0),   # [batch, 3, 32, 32]
+            # nn.Upsample(scale_factor=4),                        
             nn.Sigmoid(),
         )
 
