@@ -50,7 +50,7 @@ def get_torch_vars(x):
     return Variable(x)
 
 def imshow(img):
-    npimg = img.numpy()
+    npimg = img.cpu().numpy()
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
@@ -61,19 +61,19 @@ class Autoencoder(nn.Module):
         # Input size: [batch, 3, 32, 32]
         # Output size: [batch, 3, 32, 32]
         self.encoder = nn.Sequential(
-            nn.Conv2d(3, 6, 3, stride=1, padding=1),            # [batch, 6, 32, 32]
-            nn.MaxPool2d(2),                                    # [batch, 6, 16, 16]
+            nn.Conv2d(3, 32, 4, stride=4, padding=0),            # [batch, 6, 32, 32]
+            # nn.MaxPool2d(4),                                    # [batch, 6, 16, 16]
             nn.ReLU(),
-            nn.Conv2d(6, 12, 3, stride=1, padding=1),           # [batch, 12, 16, 16]
-            nn.MaxPool2d(2),                                    # [batch, 12, 8, 8]
+            nn.Conv2d(32, 48, 3, stride=3, padding=2),           # [batch, 12, 16, 16]
+            # nn.MaxPool2d(2),                                    # [batch, 12, 8, 8]
             nn.ReLU(),
         )
         self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(12, 6, 3, stride=1, padding=1),  # [batch, 6, 8, 8]
-            nn.Upsample(scale_factor=2),                        # [batch, 6, 16, 16]
+            nn.ConvTranspose2d(48, 32, 3, stride=3, padding=2),  # [batch, 6, 8, 8]
+            # nn.Upsample(scale_factor=2),                        # [batch, 6, 16, 16]
             nn.ReLU(),
-            nn.ConvTranspose2d(6, 3, 3, stride=1, padding=1),   # [batch, 3, 16, 16]
-            nn.Upsample(scale_factor=2),                        # [batch, 3, 32, 32]
+            nn.ConvTranspose2d(32, 3, 4, stride=4, padding=0),   # [batch, 3, 16, 16]
+            # nn.Upsample(scale_factor=4),                        # [batch, 3, 32, 32]
             nn.Sigmoid(),
         )
 
@@ -113,7 +113,9 @@ def main():
         print('GroundTruth: ', ' '.join('%5s' % classes[labels[j]] for j in range(16)))
         imshow(torchvision.utils.make_grid(images))
 
-        encoded_imgs, decoded_imgs = autoencoder(images)
+        images = Variable(images.cuda())
+
+        decoded_imgs = autoencoder(images)[1]
         imshow(torchvision.utils.make_grid(decoded_imgs.data))
 
         exit(0)
@@ -136,7 +138,7 @@ def main():
             optimizer.step()
 
             # ============ Logging ============
-            running_loss += loss.item()
+            running_loss += loss.data
             if i % 2000 == 1999:
                 print('[%d, %5d] loss: %.3f' %
                       (epoch + 1, i + 1, running_loss / 2000))
