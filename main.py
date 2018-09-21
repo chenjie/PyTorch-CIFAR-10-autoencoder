@@ -69,12 +69,12 @@ class Autoencoder(nn.Module):
             nn.ReLU(),
 			nn.Conv2d(24, 48, 4, stride=2, padding=1),           # [batch, 48, 4, 4]
             nn.ReLU(),
-			nn.Conv2d(48, 96, 4, stride=2, padding=1),           # [batch, 96, 2, 2]
-            nn.ReLU(),
+# 			nn.Conv2d(48, 96, 4, stride=2, padding=1),           # [batch, 96, 2, 2]
+#             nn.ReLU(),
         )
         self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(96, 48, 4, stride=2, padding=1),  # [batch, 48, 4, 4]
-            nn.ReLU(),
+#             nn.ConvTranspose2d(96, 48, 4, stride=2, padding=1),  # [batch, 48, 4, 4]
+#             nn.ReLU(),
 			nn.ConvTranspose2d(48, 24, 4, stride=2, padding=1),  # [batch, 24, 8, 8]
             nn.ReLU(),
 			nn.ConvTranspose2d(24, 12, 4, stride=2, padding=1),  # [batch, 12, 16, 16]
@@ -127,7 +127,7 @@ def main():
         exit(0)
 
     # Define an optimizer and criterion
-    criterion = nn.MSELoss()
+    criterion = nn.BCELoss()
     optimizer = optim.Adam(autoencoder.parameters())
 
     for epoch in range(100):
