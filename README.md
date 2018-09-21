@@ -14,10 +14,10 @@ Targets:
 ![target](/weights/target2.png)
 
 ## Previous Results (Trained on GTX1070)
-First attempt:  
+First attempt: (Too much MaxPooling and UpSampling)  
 ![decode](/weights/decoded_img.png)
 
-Second attempt:  
+Second attempt: (Model architecture is not efficient)  
 ![decode](/weights/decoded_img2.png)
 
 Targets:  
