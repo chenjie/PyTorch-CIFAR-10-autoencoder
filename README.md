@@ -5,7 +5,7 @@ This is a reimplementation of the blog post "Building Autoencoders in Keras". In
 Predictions:  
 ![decode](/weights/colab_predictions.png)
 
-Taegets:  
+Targets:  
 ![target](/weights/colab_tar.png)
 
 ## Previous Results (Trained on GTX1070)
