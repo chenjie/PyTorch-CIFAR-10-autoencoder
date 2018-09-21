@@ -13,6 +13,7 @@ import torchvision
 import torchvision.transforms as transforms
 
 # Matplotlib
+%matplotlib inline
 import matplotlib.pyplot as plt
 
 # OS
@@ -51,6 +52,7 @@ def get_torch_vars(x):
 
 def imshow(img):
     npimg = img.cpu().numpy()
+    plt.axis('off')
     plt.imshow(np.transpose(npimg, (1, 2, 0)))
     plt.show()
 
@@ -61,19 +63,23 @@ class Autoencoder(nn.Module):
         # Input size: [batch, 3, 32, 32]
         # Output size: [batch, 3, 32, 32]
         self.encoder = nn.Sequential(
-            nn.Conv2d(3, 32, 4, stride=4, padding=0),            # [batch, 32, 8, 8]
-            # nn.MaxPool2d(4),                                    
+            nn.Conv2d(3, 12, 4, stride=2, padding=1),            # [batch, 12, 16, 16]
             nn.ReLU(),
-            nn.Conv2d(32, 48, 3, stride=3, padding=2),           # [batch, 48, 4, 4]
-            # nn.MaxPool2d(2),                                    
+            nn.Conv2d(12, 24, 4, stride=2, padding=1),           # [batch, 24, 8, 8]
+            nn.ReLU(),
+			nn.Conv2d(24, 48, 4, stride=2, padding=1),           # [batch, 48, 4, 4]
+            nn.ReLU(),
+			nn.Conv2d(48, 96, 4, stride=2, padding=1),           # [batch, 96, 2, 2]
             nn.ReLU(),
         )
         self.decoder = nn.Sequential(
-            nn.ConvTranspose2d(48, 32, 3, stride=3, padding=2),  # [batch, 32, 8, 8]
-            # nn.Upsample(scale_factor=2),                        
+            nn.ConvTranspose2d(96, 48, 4, stride=2, padding=1),  # [batch, 48, 4, 4]
             nn.ReLU(),
-            nn.ConvTranspose2d(32, 3, 4, stride=4, padding=0),   # [batch, 3, 32, 32]
-            # nn.Upsample(scale_factor=4),                        
+			nn.ConvTranspose2d(48, 24, 4, stride=2, padding=1),  # [batch, 24, 8, 8]
+            nn.ReLU(),
+			nn.ConvTranspose2d(24, 12, 4, stride=2, padding=1),  # [batch, 12, 16, 16]
+            nn.ReLU(),
+            nn.ConvTranspose2d(12, 3, 4, stride=2, padding=1),   # [batch, 3, 32, 32]
             nn.Sigmoid(),
         )
 
@@ -121,8 +127,8 @@ def main():
         exit(0)
 
     # Define an optimizer and criterion
-    criterion = nn.BCELoss()
-    optimizer = optim.Adadelta(autoencoder.parameters(), lr=0.1)
+    criterion = nn.MSELoss()
+    optimizer = optim.Adam(autoencoder.parameters())
 
     for epoch in range(100):
         running_loss = 0.0
