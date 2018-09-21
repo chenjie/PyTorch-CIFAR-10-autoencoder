@@ -12,7 +12,7 @@ Targets:
 First attempt:  
 ![decode](/weights/decoded_img.png)
 
-Second attempt: 
+Second attempt:  
 ![decode](/weights/decoded_img2.png)
 
 Targets:  
