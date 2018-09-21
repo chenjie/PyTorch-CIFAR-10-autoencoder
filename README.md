@@ -5,7 +5,7 @@ This is a reimplementation of the blog post "Building Autoencoders in Keras". In
 First attempt:  
 ![decode](/weights/colab_predictions.png)
 
-Best Predictions so far:  
+Best Predictions so far: (BCEloss=~0.555)  
 ![decode](/weights/colab_predictions2.png)
 
 Targets:  
