@@ -2,8 +2,11 @@
 This is a reimplementation of the blog post "Building Autoencoders in Keras". Instead of using MNIST, this project uses CIFAR10.
 
 ## Current Results (Trained on Tesla K80 using Google Colab)
-Predictions:  
+First attempt:  
 ![decode](/weights/colab_predictions.png)
+
+Best Predictions so far:  
+![decode](/weights/colab_predictions2.png)
 
 Targets:  
 ![target](/weights/colab_tar.png)
