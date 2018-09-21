@@ -7,9 +7,11 @@ First attempt: (BCEloss=~0.57)
 
 Best Predictions so far: (BCEloss=~0.555)  
 ![decode](/weights/colab_predictions2.png)
+![decode](/weights/colab_predictions22.png)
 
 Targets:  
 ![target](/weights/colab_tar.png)
+![target](/weights/target2.png)
 
 ## Previous Results (Trained on GTX1070)
 First attempt:  
