@@ -22,3 +22,6 @@ Second attempt: (Model architecture is not efficient)
 
 Targets:  
 ![decode](/weights/target.png)
+
+## License
+[MIT](LICENSE)
